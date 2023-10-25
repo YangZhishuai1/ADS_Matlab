@@ -1,0 +1,36 @@
+
+%Maxixally Flat
+
+%N=3;3阶Filter,串联
+g0=1; 
+g1=1;
+g2=2;
+g3=1;
+g4=1;
+%L1=1,C2=2,L3=1
+
+fc=4.37*10^9;
+wc=2*pi*fc;
+
+L1=(g1/wc)*50;
+C2=(g2/wc)/50;
+%L1,C2,L3随着wc的增大而减小
+
+%LC to Tline
+
+E = 45; % 角度为 45 度
+tan_value = tan(deg2rad(E)); % 计算正切值
+
+C=1.455458*10^(-12);
+L=1.819322*10^(-9);
+
+Z0_short=w*L;
+Z0_open=1/(w*C);
+
+%Tline to Tline(Kuroda)
+
+K=1+50/Z0_short;
+new_50=K*Z0_short;
+new_Z0_short=K*50;
+
+
