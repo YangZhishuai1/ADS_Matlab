@@ -1,0 +1,25 @@
+%syms  C  Z  theta
+
+C=3*10^(-12);
+Z=77;
+theta=(pi/180)*34;
+
+f=1.8*10^9;
+w=2*pi*f;
+
+A1=[1         0 
+    1j*w*C    1];
+
+A2=[cos(theta)           1j*Z*sin(theta) 
+    1j*(1/Z)*sin(theta)  cos(theta)];
+
+A=A1*A2*A1;
+
+Z0=50;
+
+S11=( A(1,1)+A(1,2)/Z0-A(2,1)*Z0-A(2,2) ) / ( A(1,1)+A(1,2)/Z0+A(2,1)*Z0+A(2,2) );
+
+S11_abs=abs(S11);
+
+
+
