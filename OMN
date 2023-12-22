@@ -1,0 +1,86 @@
+
+Ropt=50;
+aerfa=0.191;
+gama=1.1;
+x=2.2;
+
+OBO=10*log10( (1+gama)/(aerfa*gama) );
+
+f=2*10^9;
+C1=0.88*10^(-12);
+L1=0.28*10^(-9);
+C2=0.14*10^(-12);
+L2=0.1*10^(-9);
+
+w=2*pi*f;
+
+AP1=[1        0
+    1j*w*C1  1];
+
+AP2=[1  1j*w*L1
+    0  1];
+
+AP3=[1        0
+    1j*w*C2  1];
+
+AP4=[1  1j*w*L2
+    0  1];
+
+AM=AP1*AP2*AP3*AP4;
+AA=AP4*AP3*AP2*AP1;
+
+ap1=AM(1,1);
+bp1=AM(1,2) /1j;
+cp1=AM(2,1) / 1j;
+dp1=AM(2,2);
+
+ap2=AA(1,1);
+bp2=AA(1,2) /1j;
+cp2=AA(2,1) / 1j;
+dp2=AA(2,2);
+
+
+fi=atan( sqrt( aerfa*( (1+gama*(1-aerfa)) / ((gama-(1+gama)*aerfa ) ) ) ) );
+fi_angel=fi/3.14*180;
+
+
+d2=0.186;
+b1=sin(fi) * Ropt / sqrt(aerfa*x);
+d1=(sqrt(aerfa/x))*cos(fi);
+b2=gama*(1+aerfa)*sin(fi)*cos(fi)*Ropt/sqrt(aerfa*x);
+a2=-sqrt(aerfa/x) / ( (1-aerfa)*gama );
+c2=(1-a2*d2)/b2;
+a1=b1*c2/a2+x*d1/aerfa;
+
+
+theta1=acos(cp1*b1+ap1*d1);
+theta2=acos(cp2*b2+dp2*a2);
+%theta2=1.283911111;
+Z1=(b1-bp1*cos(theta1)) / (ap1*sin(theta1));
+Z2=(b2-bp2*cos(theta2)) / (dp2*sin(theta2));
+
+Y1=1/Z1;
+B_L=( ap1*cos(theta1)-bp1*Y1*sin(theta1)-a1 )/b1;
+ZL=1/(     x/Ropt+1j*B_L );
+ZL_abs=abs(ZL); 
+
+theta1_angel=theta1/3.14*180;
+theta2_angel=theta2/3.14*180;
+
+
+
+Z3=30;
+theta3_angel=90.68;
+Z4=80;
+theta4_angel=49.53;
+
+theta3=pi*theta3_angel/180;
+theta4=pi*theta4_angel/180;
+
+ZL1=(1j*Z4*tan(theta4)*50) / ( 1j*Z4*tan(theta4)+50 );
+Z_L=Z3*( ( ZL1+1j*Z3*tan(theta3) ) / ( Z3+1j*ZL1*tan(theta3) )); 
+
+
+
+
+
