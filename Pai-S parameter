@@ -1,0 +1,33 @@
+tic
+
+f=1.8*10^9;
+w=2*pi*f;
+Z1=50;
+C=1.25*10^(-12);
+
+theta0=acos( cos(pi/2) + 2*pi*f*C*50*sin(pi/2) );
+theta0_angel=180*theta0/pi;
+
+Z0=50/sin(theta0);
+
+A1=[1       0
+    1j*w*C  1];
+
+A2=[cos(theta0)               1j*Z0*sin(theta0)
+    1j*(1/Z0)*sin(theta0)   cos(theta0)];
+
+A3=[1       0
+    1j*w*C  1];
+
+A=A1*A2*A3;
+
+S11=( A(1,1)+A(1,2)/Z1-A(2,1)*Z1-A(2,2) ) / ( A(1,1)+A(1,2)/Z1+A(2,1)*Z1+A(2,2) );
+S11_abs=abs(S11);
+S11_abs_log=20*log10(S11_abs);
+
+S12=2/( A(1,1)+A(1,2)/Z1+A(2,1)*Z1+A(2,2) );
+S12_abs=abs(S12);
+
+toc
+
+
